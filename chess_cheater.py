@@ -26,12 +26,7 @@ def get_chess_params(username, password_hash):
         for game in games:
             if game[1] == opponent or game[2] == opponent:
                 game_id = game[0]
-                print("got the game ID")
-            else:
-                print("couldn't find game")
-                break
-                
-        
+                print("got the game ID")        
     
     print("white moves go 0,2,4...")
     print("black moves go 1,3,5...")
