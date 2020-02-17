@@ -10,21 +10,27 @@ def get_current_games(username, password_hash):
         'year':'2020',
         'month':'2',
         'day':'17',
-
     }
     user_games = requests.get(create_url,params=params)
     pattern = r'Game id=\'(\d+)\' playerwhite=\'(\S+)\' playerblack=\'(\S+)\''
     games = re.findall(pattern, user_games.text)
+
     return games
 
 
 def get_chess_params(username, password_hash):
     games = get_current_games(username, password_hash)
-    opponent = input("opponent name? ")
-    for game in games:
-        if game[1] == opponent or game[2] == opponent:
-            game_id = game[0]
-            print("got the game ID")
+    game_id=0
+    while game_id == 0:
+        opponent = input("opponent name? ")
+        for game in games:
+            if game[1] == opponent or game[2] == opponent:
+                game_id = game[0]
+                print("got the game ID")
+            else:
+                print("couldn't find game")
+                break
+                
         
     
     print("white moves go 0,2,4...")
@@ -98,33 +104,33 @@ def get_chess_params(username, password_hash):
         isCheck = "true"
 
     params = {
-    'user':username,
-    'pass':password_hash,
-    'gameID':'%s'%game_id,
-    'moveID':'%s'%move_id,
-    'piece':'%s'%piece,
-    'isBlack':'%s'%isBlack,
-    'startRow':'%s'%startRow,
-    'startCol':'%s'%startCol,
-    'endRow':'%s'%endRow,
-    'endCol':'%s'%endCol,
-    'isCapturing':'%s'%isCapturing,
-    'capturedPiece':'%s'%capturedPiece,
-    'capturedPieceRow':'%s'%capturedPieceRow,
-    'capturedPieceCol':'%s'%capturedPieceCol,
-    'isPromoting':'%s'%isPromoted,
-    'promotedType':'%s'%promotedType,
-    'enPassant':'false',
-    'castleKingside':'%s'%castleKingSide,
-    'castleQueenside':'%s'%castleQueenSide,
-    'isCheck':'%s'%isCheck,
-    'isCheckmate':'%s'%isCheckmate,
-    'isStalemate':'%s'%isStalemate,
-    'offerDraw':'false',
-    'drawDenied':'false',
-    'drawAccepted':'%s'%drawAccepted,
-    'isResign':'false',
-    'cache':'‭1580005118682‬'
+        'user':username,
+        'pass':password_hash,
+        'gameID':'%s'%game_id,
+        'moveID':'%s'%move_id,
+        'piece':'%s'%piece,
+        'isBlack':'%s'%isBlack,
+        'startRow':'%s'%startRow,
+        'startCol':'%s'%startCol,
+        'endRow':'%s'%endRow,
+        'endCol':'%s'%endCol,
+        'isCapturing':'%s'%isCapturing,
+        'capturedPiece':'%s'%capturedPiece,
+        'capturedPieceRow':'%s'%capturedPieceRow,
+        'capturedPieceCol':'%s'%capturedPieceCol,
+        'isPromoting':'%s'%isPromoted,
+        'promotedType':'%s'%promotedType,
+        'enPassant':'false',
+        'castleKingside':'%s'%castleKingSide,
+        'castleQueenside':'%s'%castleQueenSide,
+        'isCheck':'%s'%isCheck,
+        'isCheckmate':'%s'%isCheckmate,
+        'isStalemate':'%s'%isStalemate,
+        'offerDraw':'false',
+        'drawDenied':'false',
+        'drawAccepted':'%s'%drawAccepted,
+        'isResign':'false',
+        'cache':'‭1580005118682‬'
     }
     return params
 
@@ -159,6 +165,5 @@ def play_game(username, password_hash):
 
 username = 'username here'
 password_hash = 'md5 hash of your password here'
-
 
 play_game(username, password_hash)
