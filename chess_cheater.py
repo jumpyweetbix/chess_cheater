@@ -15,10 +15,6 @@ def get_current_games(username, password_hash):
     user_games = requests.get(create_url,params=params)
     pattern = r'Game id=\'(\d+)\' playerwhite=\'(\S+)\' playerblack=\'(\S+)\''
     games = re.findall(pattern, user_games.text)
-    # for game in games:
-    #     print("game_id = %s"%game[0])
-    #     print("playerwhite = %s"%game[1])
-    #     print("playerblack = %s\n"%game[2])
     return games
 
 
